@@ -44,16 +44,6 @@ RUN git clone https://github.com/uncrustify/uncrustify.git \
     && cmake .. && make && make install \
     && cd ../../ && rm -rf uncrustify
 
-# install pyenv, python, and pipenv
-RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-ENV PATH="/root/.pyenv/bin:$PATH"
-RUN eval "$(pyenv init -)" \
-    && eval "$(pyenv virtualenv-init -)" \
-    && pyenv update \
-    && pyenv install 3.6.5 \
-    && pyenv global 3.6.5 \
-    && pip install --upgrade pip pipenv
-
 # required for pipenv
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
