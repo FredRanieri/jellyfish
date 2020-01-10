@@ -1,0 +1,23 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.1.300
+    - name: Build with dotnet
+      run: |
+        cd src
+        docker build -t jellyfish-ci .
+        cd ..
+        docker run --name jellyfish-ci -v $PWD:/root/jellyfish/ -i jellyfish-ci
+        cd root/jellyfish
+        ./ci.sh
